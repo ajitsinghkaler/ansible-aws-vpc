@@ -114,4 +114,28 @@
           - dest: 0.0.0.0/0
             gateway_id: "{{igw_out.gateway_id}}"
       register: pubRT_out
+
+    - name: create vprofile nat gateway and allocate new IP address
+      ec2_vpc_nat_gateway:
+        subnet_id: "{{pubsub1_out.subnet.id}}"
+        region: "{{region}}"
+        state: "{{state}}"
+        if_exist_do_not_create: yes
+        wait: yes
+      register: NATGW_out
+
+    - name: Setup private subnet route table
+      ec2_vpc_route_table:
+        vpc_id: "{{vpcout.vpc.id}}"
+        region: "{{region}}"
+        tags:
+          Name: "vprofile-Privrt"
+        subnets:
+          - "{{privsub1_out.subnet.id}}"
+          - "{{privsub2_out.subnet.id}}"
+          - "{{privsub3_out.subnet.id}}"
+        routes:
+          - dest: 0.0.0.0/0
+            gateway_id: "{{NATGW_out.nat_gateway.id}}"
+      register: privRT_out
     
