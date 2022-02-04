@@ -129,14 +129,14 @@
         vpc_id: "{{vpcout.vpc.id}}"
         region: "{{region}}"
         tags:
-          Name: "vprofile-Privrt"
+          Name: "Vprofile-PrivRT"
         subnets:
           - "{{privsub1_out.subnet.id}}"
           - "{{privsub2_out.subnet.id}}"
           - "{{privsub3_out.subnet.id}}"
         routes:
           - dest: 0.0.0.0/0
-            gateway_id: "{{NATGW_out.nat_gateway.id}}"
+            gateway_id: "{{NATGW_out.nat_gateway_id}}"
       register: privRT_out
     
     - debug:
