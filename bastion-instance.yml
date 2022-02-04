@@ -25,7 +25,7 @@
 
     - name: create Sec GRP from bastion hosts
       ec2_group:
-        name: Bastion-host-grp
+        name: Bastion-host-sg
         description: All 22 from everywhere alnd all ports within sg
         vpc_id: "{{vpcid}}"
         region: "{{region}}"
