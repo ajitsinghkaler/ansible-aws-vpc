@@ -8,7 +8,7 @@
       include_vars: vars/output_vars
 
     - name: Import VPC Variables
-      include_vars: vars/vpc_stack
+      include_vars: vars/vpc_setup
 
     - name: Import Vprofile setup varaiables
       include_vars: vars/vprostacksetup 
