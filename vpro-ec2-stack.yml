@@ -1,6 +1,6 @@
 ---
 - name: Setup Vprofile Stack
-  hosts: locaclhost
+  hosts: localhost
   connection: locak
   gather_facts: False
   tasks:
