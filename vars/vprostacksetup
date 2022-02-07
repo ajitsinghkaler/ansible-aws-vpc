@@ -1,4 +1,4 @@
-ngnix_ami: ami-0f3b400f4ed1c4eda
+nginx_ami: ami-0f3b400f4ed1c4eda
 tomcat_ami: ami-0f3b400f4ed1c4eda
 memcached_ami: ami-0f3b400f4ed1c4eda
 rmq_ami: ami-0f3b400f4ed1c4eda
