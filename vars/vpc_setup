@@ -20,3 +20,6 @@ zone2: "ap-south-1b"
 zone3: "ap-south-1c"
 
 state: present
+
+bastion_ami: ami-03fa4afc89e4a8a09
+MYIP: 180.188.250.0/24
