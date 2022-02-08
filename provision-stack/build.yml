@@ -5,14 +5,13 @@
   tasks:
     - name: Install jdk, maven, git
       apt:
-        name:
-          state: present
-          name: "{{item}}"
-          update_cache: yes
-        loop:
-          - openjdk-8-jdk
-          - maven
-          - git
+        state: present
+        name: "{{item}}"
+        update_cache: yes
+      loop:
+        - openjdk-8-jdk
+        - maven
+        - git
     
     - name: Clone the repository
       git:
