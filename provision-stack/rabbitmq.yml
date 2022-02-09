@@ -1,32 +1,31 @@
 ---
-
-- name: Install & setup rmq01
+- name: Install & Setup RabbitMQ with user
   hosts: rmqsrvgrp
   gather_facts: no
   tasks:
-    - name: Install Erlang repo
+    - name: Install Erlang Repository Package
       apt:
-        deb: "https://packages.erlang-solutions.com/erlang-solutions_1.0_all.deb"
+        deb: https://packages.erlang-solutions.com/erlang-solutions_1.0_all.deb
       tags:
-        - package 
+        - package
 
-    - name: Add an Erlang solution public key
+    - name: Add an Erlang Solution public Key
       apt_key:
-        url: "https://packages.erlang-solutions.com/ubuntu/erlang_solutions.asc"
+        url: https://packages.erlang-solutions.com/ubuntu/erlang_solutions.asc
         state: present
       tags:
         - package
-      
+
     - name: Install Erlang
       apt:
         name: erlang
-        state: present
         update_cache: yes
         cache_valid_time: 86400
+        state: present
       tags:
         - package
 
-    - name: Add an apt siging key
+    - name: Add an Apt signing key, uses whichever key is at the URL
       apt_key:
         url: https://github.com/rabbitmq/signing-keys/releases/download/2.0/rabbitmq-release-signing-key.asc
         state: present
@@ -38,8 +37,8 @@
         state: present
       tags:
         - package
-    
-    - name: Install RabbitMQ
+
+    - name: Install Rabbit MQ
       apt:
         name: rabbitmq-server
         state: present
@@ -47,7 +46,8 @@
       tags:
         - package
 
-    - name: Start and enable RabbitMQ service
+
+    - name: Start & Enable RMQ
       service:
         name: rabbitmq-server
         state: started
@@ -55,8 +55,8 @@
       tags:
         - svc
 
-    - name: config setup
-      copy: 
+    - name: Config setup
+      copy:
         content: |
           [{rabbit, [{loopback_users, []}]}].
         dest: /etc/rabbitmq/rabbitmq.config
@@ -64,35 +64,33 @@
         - Restart RMQ
       tags:
         - conf
-    
+
+
     - rabbitmq_user:
         user: test
         password: test
-        configure_priv: ".*"
-        read_priv: ".*"
-        write_priv: ".*"
+        configure_priv: .*
+        read_priv: .*
+        write_priv: .*
+        tags: administrator
         state: present
-        tags: adminstrator
       notify:
         - Restart RMQ
       tags:
         - conf
 
-    - name: Enable managemnt plugin
+
+    - name: Enables the rabbitmq_management plugin
       rabbitmq_plugin:
-        name: rabbitmq_management
+        names: rabbitmq_management
         state: enabled
-      tags:
-        - conf
       notify:
         - Restart RMQ
+      tags:
+        - package
 
   handlers:
     - name: Restart RMQ
       service:
         name: rabbitmq-server
         state: restarted
-        enabled: yes
-
-    
-
