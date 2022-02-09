@@ -16,7 +16,7 @@
     - name: Clone the repository
       git:
         repo: "https://github.com/devopshydclub/vprofile-project.git"
-        dest: "/Vprofile-repo"
+        dest: ./Vprofile-repo
         version: vp-rem
       register: git_status
 
